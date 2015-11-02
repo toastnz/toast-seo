@@ -53,8 +53,7 @@
     function MetaLength() {
         var $count = $('.toastSeoChars');
         var length = 156;
-        var currentLength = $('.toastSEOMetaText').text().length;
-        console.log(currentLength, length);
+        var currentLength = $('[name=MetaDescription]').val().length;
         if (currentLength <= length) {
             $count.text(length - currentLength).css({fontWeight: 'bold', color: 'green'});
         } else {

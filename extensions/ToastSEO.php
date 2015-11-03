@@ -72,7 +72,7 @@ class ToastSEO extends DataExtension {
             $this->owner->MetaDescription = $this->owner->dbObject('Content')->Summary(25);
         }
         if ($this->owner->SEOTitle == '') {
-            $this->owner->SEOTitle = $this->owner->URLSegment;
+            $this->owner->SEOTitle = $this->owner->Title;
         }
     }
 

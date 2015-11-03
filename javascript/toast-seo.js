@@ -96,9 +96,9 @@
         }
 
         if (URLCount > 0) {
-            $('.toastURLMatch').text('Yes (' + URLCount + ')').css({color: 'green'});
+            $('.toastURLMatch').text(' Yes (' + URLCount + ')').css({color: 'green'});
         } else {
-            $('.toastURLMatch').text('No (' + URLCount + ')').css({color: 'red'});
+            $('.toastURLMatch').text(' No (' + URLCount + ')').css({color: 'red'});
         }
 
         /**
@@ -116,9 +116,9 @@
         }
 
         if (summaryCount > 0) {
-            $('.toastSEOSummary').text('Yes (' + summaryCount + ')').css({color: 'green'});
+            $('.toastSEOSummary').text(' Yes (' + summaryCount + ')').css({color: 'green'});
         } else {
-            $('.toastSEOSummary').text('No (' + summaryCount + ')').css({color: 'red'});
+            $('.toastSEOSummary').text(' No (' + summaryCount + ')').css({color: 'red'});
         }
 
         /**
@@ -136,9 +136,9 @@
         }
 
         if (metaCount > 0) {
-            $('.toastSEOMeta').text('Yes (' + metaCount + ')').css({color: 'green'});
+            $('.toastSEOMeta').text(' Yes (' + metaCount + ')').css({color: 'green'});
         } else {
-            $('.toastSEOMeta').text('No (' + metaCount + ')').css({color: 'red'});
+            $('.toastSEOMeta').text(' No (' + metaCount + ')').css({color: 'red'});
         }
 
         /**

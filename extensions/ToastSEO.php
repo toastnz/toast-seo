@@ -48,7 +48,7 @@ class ToastSEO extends DataExtension {
                 LiteralField::create('', '<div class="toastSEOSnippet" style="padding:0 20px 10px;background:white;margin:20px  20px 20px 0;display:block;border: 1px solid grey;"></div>'),
                 LiteralField::create('', '</div>'),
                 TextField::create('FocusKeyword', 'Page Subject')->addExtraClass('focusWords')->setRightTitle('Pick the main keywords or keyphrase that this page is about.'),
-                TextField::create('SEOTitle', 'Meta Title')->setRightTitle('The SEO title defaults to what is generated based on this sites title template.'),
+                TextField::create('SEOTitle', 'Meta Title')->setRightTitle('This meta title is generated automatically from the page name. Editing this will change how the page title shows up in google search. Each page title must be unique.'),
                 LiteralField::create('', '<br><p class="toastSEOMetaCount" style="margin-left: 12px;">The meta description should be limited to 156 characters, <span class="toastSeoChars">6</span> chars left.</p>'),
                 TextareaField::create('MetaDescription', 'Meta Description')->addExtraClass('toastSEOMetaText')->setRightTitle('The meta description is often shown as the black text under the title in a search result. For this to work it has to contain the keyword that was searched for.'),
                 LiteralField::create('', '<div class="toastSEOSummaryText" style="opacity:0;position:relative;height:0;overflow:hidden;">::  ' . $this->owner->dbObject('Content')->Summary(25) . '</div>'),

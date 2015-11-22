@@ -74,6 +74,15 @@ class ToastSEO extends DataExtension {
         if ($this->owner->SEOTitle == '') {
             $this->owner->SEOTitle = $this->owner->Title;
         }
+        if (SiteConfig::current_site_config()->DefaultSEOMetaTitlePosition) {
+            if (SiteConfig::current_site_config()->DefaultSEOMetaTitlePosition === 'before') {
+                $this->owner->SEOTitle = str_replace(SiteConfig::current_site_config()->DefaultSEOMetaTitle, '', $this->owner->SEOTitle);
+                $this->owner->SEOTitle = SiteConfig::current_site_config()->DefaultSEOMetaTitle . $this->owner->SEOTitle;
+            } else {
+                $this->owner->SEOTitle = str_replace(SiteConfig::current_site_config()->DefaultSEOMetaTitle, '', $this->owner->SEOTitle);
+                $this->owner->SEOTitle = $this->owner->SEOTitle . SiteConfig::current_site_config()->DefaultSEOMetaTitle;
+            }
+        }
     }
 
 }

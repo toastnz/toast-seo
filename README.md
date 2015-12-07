@@ -16,4 +16,4 @@ Then add the following to the HEAD of your document
     <% include ToastSEO %>
 ```
 
-![SilverStripe SEO Editor](https://raw.github.com/toastnz/toast-seo/master/preview.png)
+![SilverStripe SEO Editor](https://raw.githubusercontent.com/toastnz/toast-seo/master/images/preview.png)

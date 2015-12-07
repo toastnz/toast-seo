@@ -1,9 +1,19 @@
-# Silverstripe Open Graph Meta Data
+# Silverstripe SEO Module
 
-Simple Module to add open graph meta information to a page
+Simple Module to adjust SEO properties on a page by page basis
 
-Add the following to the HEAD of your document (This will override the Meta include so make sure that you remove that.
+## Installation
+
+Installation via composer
+
+```bash
+$ composer require toastnz/toast-seo
+```
+
+Then add the following to the HEAD of your document 
 
 ```
     <% include ToastSEO %>
 ```
+
+![SilverStripe SEO Editor](https://raw.github.com/toastnz/toast-seo/master/preview.png)

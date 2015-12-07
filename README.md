@@ -1,4 +1,4 @@
-# Silverstripe SEO Module
+# Silverstripe Toast SEO Module
 
 Simple Module to adjust SEO properties on a page by page basis
 
@@ -17,3 +17,7 @@ Then add the following to the HEAD of your document
 ```
 
 ![SilverStripe SEO Editor](https://raw.githubusercontent.com/toastnz/toast-seo/master/images/preview.png)
+
+## License
+
+Toast SEO Module  is released under the MIT license

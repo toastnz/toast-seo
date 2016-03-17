@@ -1,23 +1,30 @@
+<p align="center">
+  <img style="width:100%;height:auto; max-width:635px" src="http://pinc.nz/git/toastseo/toastseo.png">
+</p>
+
 # Silverstripe Toast SEO Module
 
 Simple Module to adjust SEO properties on a page by page basis
 
 ## Installation
 
-Installation via composer
+Get the goodness just like so:
 
-```bash
-$ composer require toastnz/toast-seo
+```
+ composer require toastnz/toast-seo
 ```
 
 Then add the following to the HEAD of your document 
 
 ```
-    <% include ToastSEO %>
+ <% include ToastSEO %>
 ```
 
-![SilverStripe SEO Editor](https://raw.githubusercontent.com/toastnz/toast-seo/master/images/preview.png)
+Step 4: Profit
 
-## License
 
-Toast SEO Module  is released under the MIT license
+
+
+<p align="center">
+  <img style="width:100%;height:auto; max-width:938px" src="http://pinc.nz/git/toastseo/toastseosettings.png">
+</p>

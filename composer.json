@@ -1,21 +1,28 @@
 {
-  "name": "toastnz/toast-seo",
-  "description": "Silverstripe Seo Module",
-  "type": "silverstripe-module",
-  "keywords": [
-    "silverstripe",
-    "SEO"
-  ],
-  "license": "BSD-3-Clause",
-  "authors": [
-    {
-      "name": "Jaydn de Graaf",
-      "homepage": "http://pinc.nz/",
-      "role": "Developer"
+    "name": "toastnz/toast-seo",
+    "description": "Silverstripe SEO Module",
+    "type": "silverstripe-module",
+    "keywords": [
+        "silverstripe",
+        "SEO"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Jaydn de Graaf",
+            "homepage": "http://pinc.nz/",
+            "role": "Developer"
+        },
+        {
+            "name": "Danae Miller-Clendon",
+            "homepage": "http://toast.co.nz/",
+            "email": "danae@toast.co.nz",
+            "role": "Token Chick"
+        }
+    ],
+    "require": {
+        "composer/installers": "*",
+        "silverstripe/cms": ">=3.0.1,<3.2",
+        "silverstripe/framework": ">=3.0.1,<3.2"
     }
-  ],
-  "require": {
-    "silverstripe/framework": ">=3.0.1,<3.2",
-    "composer/installers": "*"
-  }
 }

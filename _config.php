@@ -1,3 +1,3 @@
 <?php
 
-define('TOAST_DIR',basename(dirname(__FILE__)));
+define('TOAST_SEO_DIR', basename(__DIR__));

@@ -27,7 +27,7 @@ class ToastSEO extends DataExtension {
      */
     public function updateCMSFields(FieldList $fields) {
 
-        Requirements::javascript(TOAST_DIR . '/javascript/toast-seo.js');
+        Requirements::javascript(TOAST_SEO_DIR . '/javascript/toast-seo.js');
 
         $fields->removeByName('Metadata');
 

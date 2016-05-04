@@ -1,3 +1,7 @@
+---
+Name: toastseo
+After: 'framework/*','cms/*'
+---
 Page:
   extensions:
     - ToastSEO

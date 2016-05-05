@@ -12,8 +12,8 @@ class ToastSEO extends DataExtension {
         'SEOTitle' => 'Varchar(512)',
         'FocusKeyword' => 'Varchar(512)',
         'MetaAuthor' => 'Varchar(512)',
-        'robotsIndex' => 'Varchar(512)',
-        'robotsFollow' => 'Varchar(512)'
+        'robotsIndex' => 'Enum("index,noindex","index")',
+        'robotsFollow' => 'Enum("follow,nofollow","follow")'
     );
 
     /**
@@ -30,7 +30,6 @@ class ToastSEO extends DataExtension {
         Requirements::javascript(TOAST_SEO_DIR . '/javascript/toast-seo.js');
 
         $fields->removeByName('Metadata');
-
 
         $fields->addFieldsToTab('Root.Main', ToggleCompositeField::create('Toast SEO', 'Toast SEO',
             array(
@@ -57,32 +56,52 @@ class ToastSEO extends DataExtension {
                 OptionsetField::create('robotsIndex', 'Index', array(
                     'index' => 'INDEX',
                     'noindex' => 'NOINDEX'
-                ), 'index'),
-                OptionsetField::create('robotsFollow', '&nbsp;&nbsp;&nbsp;Follow', array(
+                )),
+                OptionsetField::create('robotsFollow', 'Follow', array(
                     'follow' => 'FOLLOW',
                     'nofollow' => 'NOFOLLOW'
-                ), 'follow')
+                ))
             )
         ));
     }
 
-    public function onBeforeWrite() {
+    public function onBeforeWrite()
+    {
         parent::onBeforeWrite();
-        if ($this->owner->MetaDescription == '') {
-            $this->owner->MetaDescription = $this->owner->dbObject('Content')->Summary(25);
+
+        if ($this->owner->isChanged('MetaDescription') && $this->owner->MetaDescription == '') {
+            $this->owner->setField('MetaDescription', $this->owner->dbObject('Content')->Summary(25));
         }
-        if ($this->owner->SEOTitle == '') {
-            $this->owner->SEOTitle = $this->owner->Title;
-        }
-        if (SiteConfig::current_site_config()->DefaultSEOMetaTitlePosition) {
-            if (SiteConfig::current_site_config()->DefaultSEOMetaTitlePosition === 'before') {
-                $this->owner->SEOTitle = str_replace(SiteConfig::current_site_config()->DefaultSEOMetaTitle, '', $this->owner->SEOTitle);
-                $this->owner->SEOTitle = SiteConfig::current_site_config()->DefaultSEOMetaTitle . $this->owner->SEOTitle;
-            } else {
-                $this->owner->SEOTitle = str_replace(SiteConfig::current_site_config()->DefaultSEOMetaTitle, '', $this->owner->SEOTitle);
-                $this->owner->SEOTitle = $this->owner->SEOTitle . SiteConfig::current_site_config()->DefaultSEOMetaTitle;
-            }
+        if ($this->owner->isChanged('SEOTitle') && $this->owner->SEOTitle == '') {
+            $this->owner->setField('SEOTitle', $this->owner->Title);
         }
     }
 
+    public function getToastSEOTitle()
+    {
+        return  $this->owner->SEOTitle ? : $this->owner->MetaTitle ? : $this->owner->Title;
+    }
+
+    public function getFullToastSEOTitle()
+    {
+        /** =========================================
+         * @var ToastSEOSiteConfigExtension $siteConfig
+        ===========================================*/
+
+        $siteConfig = SiteConfig::current_site_config();
+
+        $base = $this->getToastSEOTitle();
+
+        $addition = $siteConfig->DefaultSEOMetaTitle;
+
+        if ($siteConfig->DefaultSEOMetaTitlePosition == 'before') {
+            $title = sprintf('%s %s', $addition, $base);
+        } else {
+            $title = sprintf('%s %s', $base, $addition);
+        }
+
+        $this->owner->extend('updateToastSEOTitle', $title);
+
+        return $title;
+    }
 }

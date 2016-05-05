@@ -2,7 +2,7 @@
 Name: toastseo
 After: 'framework/*','cms/*'
 ---
-Page:
+SiteTree:
   extensions:
     - ToastSEO
 SiteConfig:

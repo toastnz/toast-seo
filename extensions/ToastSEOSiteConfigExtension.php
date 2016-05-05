@@ -2,12 +2,17 @@
 
 /**
  * Class ToastSEOSiteConfigExtension
+ *
+ * @property string DefaultSEOMetaTitle
+ * @property string DefaultSEOMetaTitlePosition
+ *
+ * @mixin SiteConfig
  */
 class ToastSEOSiteConfigExtension extends DataExtension {
 
     private static $db = array(
         'DefaultSEOMetaTitle' => 'Varchar(255)',
-        'DefaultSEOMetaTitlePosition' => 'Varchar(255)'
+        'DefaultSEOMetaTitlePosition' => 'Enum("before,after","before")'
     );
 
     /**
@@ -28,9 +33,9 @@ class ToastSEOSiteConfigExtension extends DataExtension {
             HeaderField::create('', 'SEO Settings'),
             Textfield::create('DefaultSEOMetaTitle', 'Default Meta Title Addition')->setRightTitle('This is additional copy that will be automatically added to all of your pages\' meta titles.'),
             OptionsetField::create('DefaultSEOMetaTitlePosition', 'Default Meta Title Position', array(
-                'before'=>'Prepend to the Meta Title',
-                'after'=>'Append to the Meta Title'
-                ),'before')
+                'before' => 'Prepend to the Meta Title',
+                'after' => 'Append to the Meta Title'
+            ))
         ));
 
     }

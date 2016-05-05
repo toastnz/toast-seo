@@ -1,4 +1,4 @@
-<title><% if $SEOTitle %>$SEOTitle<% else_if $MetaTitle %>$MetaTitle | $SiteConfig.Title<% else %>$Title | $SiteConfig.Title<% end_if %></title>
+<title>{$FullToastSEOTitle}</title>
 <% if $MetaDescription %>
     <% if $robotsIndex %>
         <meta name="robots" content="$robotsIndex, $robotsFollow">

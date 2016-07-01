@@ -14,11 +14,19 @@ Get the goodness just like so:
  composer require toastnz/toast-seo
 ```
 
-Then add the following to the HEAD of your document 
+Then add the following to the HEAD of your document
 
 ```
  <% include ToastSEO %>
 ```
+
+Alternatively, just use
+
+```
+$MetaTags
+```
+
+Which won't give you the neat Title suffix / prefix from the settings.
 
 Step 4: Profit
 

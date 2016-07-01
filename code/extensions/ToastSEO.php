@@ -1,7 +1,14 @@
 <?php
 
 /**
- * Pinc
+ * Class ToastSEO
+ *
+ * @property string SEOTitle
+ * @property string FocusKeyword
+ * @property string MetaAuthor
+ * @property string robotsIndex
+ * @property string robotsFollow
+ * @property SiteTree|ToastSEO owner
  */
 class ToastSEO extends DataExtension {
 
@@ -69,11 +76,34 @@ class ToastSEO extends DataExtension {
     {
         parent::onBeforeWrite();
 
-        if ($this->owner->isChanged('MetaDescription') && $this->owner->MetaDescription == '') {
+        if ($this->owner->isChanged('Content') && $this->owner->MetaDescription == '') {
             $this->owner->setField('MetaDescription', $this->owner->dbObject('Content')->Summary(25));
         }
-        if ($this->owner->isChanged('SEOTitle') && $this->owner->SEOTitle == '') {
+        if ($this->owner->isChanged('Title') && $this->owner->SEOTitle == '') {
             $this->owner->setField('SEOTitle', $this->owner->Title);
+        }
+    }
+
+    /**
+     * @param string $tags
+     */
+    public function MetaTags(&$tags)
+    {
+        // Indexing
+        if ($this->owner->robotsIndex && $this->owner->robotsFollow) {
+            $tags .= sprintf('<meta name="robots" content="%s, %s">', $this->owner->robotsIndex, $this->owner->robotsFollow) . "\n";
+        } else {
+            $tags .= '<meta name="robots" content="index, follow">' . "\n";
+        }
+
+        // Keywords
+        if ($this->owner->FocusKeyword) {
+            $tags .= sprintf('<meta name="keywords" content="%s">', $this->owner->FocusKeyword) . "\n";
+        }
+
+        // Author
+        if ($this->owner->MetaAuthor) {
+            $tags .= '<meta name="Author" content="' . $this->owner->MetaAuthor . '">' . "\n";
         }
     }
 
@@ -85,7 +115,7 @@ class ToastSEO extends DataExtension {
     public function getFullToastSEOTitle()
     {
         /** =========================================
-         * @var ToastSEOSiteConfigExtension $siteConfig
+         * @var SiteConfig|ToastSEOSiteConfigExtension $siteConfig
         ===========================================*/
 
         $siteConfig = SiteConfig::current_site_config();

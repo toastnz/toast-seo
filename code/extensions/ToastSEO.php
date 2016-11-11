@@ -30,7 +30,6 @@ class ToastSEO extends DataExtension {
 
     /**
      * @param FieldList $fields
-     * @return Object
      */
     public function updateCMSFields(FieldList $fields) {
 
@@ -38,7 +37,7 @@ class ToastSEO extends DataExtension {
 
         $fields->removeByName('Metadata');
 
-        $fields->addFieldsToTab('Root.Main', ToggleCompositeField::create('Toast SEO', 'Toast SEO',
+        $fields->addFieldToTab('Root.Main', ToggleCompositeField::create('Toast SEO', 'Toast SEO',
             array(
                 LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Toast SEO<img style="position:relative;top:8px;" src="' . Director::absoluteBaseURL() . 'toast-seo/Images/seo.png"></h2>'),
                 LiteralField::create('', '<div class="toastSeo" style="margin-left:12px;">'),
@@ -76,11 +75,14 @@ class ToastSEO extends DataExtension {
     {
         parent::onBeforeWrite();
 
-        if ($this->owner->isChanged('Content') && $this->owner->MetaDescription == '') {
-            $this->owner->setField('MetaDescription', $this->owner->dbObject('Content')->Summary(25));
-        }
-        if ($this->owner->isChanged('Title') && $this->owner->SEOTitle == '') {
-            $this->owner->setField('SEOTitle', $this->owner->Title);
+        if ($this->owner->exists()) {
+            if ($this->owner->isChanged('Content') && !$this->owner->MetaDescription) {
+                $this->owner->setField('MetaDescription', $this->owner->dbObject('Content')->Summary(25));
+            }
+
+            if ($this->owner->isChanged('Title') && !$this->owner->SEOTitle) {
+                $this->owner->setField('SEOTitle', $this->owner->Title);
+            }
         }
     }
 

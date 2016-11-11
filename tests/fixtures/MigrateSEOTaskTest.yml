@@ -1,0 +1,13 @@
+Page:
+  oldHome:
+    SEOTitle: 'Home'
+  oldAbout:
+    FocusKeyword: 'cats'
+
+SiteTree:
+  newHome:
+    Title: 'Home'
+  newAbout:
+    Title: 'About'
+    SEOTitle: 'About Us'
+    FocusKeyword: 'about'

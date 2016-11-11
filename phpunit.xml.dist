@@ -1,0 +1,22 @@
+<phpunit bootstrap="framework/tests/bootstrap.php" colors="true">
+
+    <testsuite name="Toast SEO Suite">
+        <directory>./tests</directory>
+    </testsuite>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">/toast-seo/</directory>
+        </whitelist>
+    </filter>
+
+    <groups>
+        <exclude>
+            <group>sanitychecks</group>
+        </exclude>
+    </groups>
+
+    <!--<php>
+        <get name="flush" value="1"/>
+    </php>-->
+</phpunit>

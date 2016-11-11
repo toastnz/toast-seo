@@ -31,7 +31,7 @@ class ToastSEOSiteConfigExtension extends DataExtension {
         $fields->findOrMakeTab('Root.Settings.SEO');
         $fields->addFieldsToTab('Root.Settings.SEO', array(
             HeaderField::create('', 'SEO Settings'),
-            Textfield::create('DefaultSEOMetaTitle', 'Default Meta Title Addition')->setRightTitle('This is additional copy that will be automatically added to all of your pages\' meta titles.'),
+            TextField::create('DefaultSEOMetaTitle', 'Default Meta Title Addition')->setRightTitle('This is additional copy that will be automatically added to all of your pages\' meta titles.'),
             OptionsetField::create('DefaultSEOMetaTitlePosition', 'Default Meta Title Position', array(
                 'before' => 'Prepend to the Meta Title',
                 'after' => 'Append to the Meta Title'

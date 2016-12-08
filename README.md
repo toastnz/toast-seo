@@ -21,16 +21,16 @@ Get the goodness just like so:
  composer require toastnz/toast-seo
 ```
 
-Then add the following to the HEAD of your document
+And ensure you have the following in the `<head>` of your template:
 
 ```
- <% include ToastSEO %>
+ $MetaTags
 ```
 
-Alternatively, just use
+If you are not using `$MetaTags`, you can use the following template code:
 
 ```
-$MetaTags
+  <% include ToastSEO %>
 ```
 
 Which won't give you the neat Title suffix / prefix from the settings.

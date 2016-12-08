@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.3.2](https://github.com/toastnz/toast-seo/tree/0.3.2) (2016-12-09)
+
+* Relaxed SilverStripe Framework/CMS requirements
+
 ## [0.3.1](https://github.com/toastnz/toast-seo/tree/0.3.1) (2016-11-11)
 
 * Added migration task for older versions; moves data from the Page table to the SiteTree table

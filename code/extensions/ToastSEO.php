@@ -39,7 +39,7 @@ class ToastSEO extends DataExtension {
 
         $fields->addFieldToTab('Root.Main', ToggleCompositeField::create('Toast SEO', 'Toast SEO',
             array(
-                LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Toast SEO<img style="position:relative;top:8px;" src="' . Director::absoluteBaseURL() . 'toast-seo/Images/seo.png"></h2>'),
+                LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Toast SEO<img style="position:relative;top:8px;" src="' . Director::absoluteBaseURL() . 'toast-seo/images/seo.png"></h2>'),
                 LiteralField::create('', '<div class="toastSeo" style="margin-left:12px;">'),
                 LiteralField::create('', '<br><strong>Focus Keyword Usage</strong>'),
                 LiteralField::create('', '<br>Your focus keyword was found in:'),

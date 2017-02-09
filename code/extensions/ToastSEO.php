@@ -3,43 +3,36 @@
 /**
  * Class ToastSEO
  *
- * @property string SEOTitle
- * @property string FocusKeyword
- * @property string MetaAuthor
- * @property string robotsIndex
- * @property string robotsFollow
+ * @property string            SEOTitle
+ * @property string            FocusKeyword
+ * @property string            MetaAuthor
+ * @property string            robotsIndex
+ * @property string            robotsFollow
+ *
  * @property SiteTree|ToastSEO owner
  */
-class ToastSEO extends DataExtension {
-
-    /**
-     * @var array
-     */
-    private static $db = array(
-        'SEOTitle' => 'Varchar(512)',
+class ToastSEO extends DataExtension
+{
+    private static $db = [
+        'SEOTitle'     => 'Varchar(512)',
         'FocusKeyword' => 'Varchar(512)',
-        'MetaAuthor' => 'Varchar(512)',
-        'robotsIndex' => 'Enum("index,noindex","index")',
+        'MetaAuthor'   => 'Varchar(512)',
+        'robotsIndex'  => 'Enum("index,noindex","index")',
         'robotsFollow' => 'Enum("follow,nofollow","follow")'
-    );
-
-    /**
-     * @var array
-     */
-    private static $has_one = array();
+    ];
 
     /**
      * @param FieldList $fields
      */
-    public function updateCMSFields(FieldList $fields) {
-
+    public function updateCMSFields(FieldList $fields)
+    {
         Requirements::javascript(TOAST_SEO_DIR . '/javascript/toast-seo.js');
 
         $fields->removeByName('Metadata');
 
         $fields->addFieldToTab('Root.Main', ToggleCompositeField::create('Toast SEO', 'Toast SEO',
-            array(
-                LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Toast SEO<img style="position:relative;top:8px;" src="' . Director::absoluteBaseURL() . 'toast-seo/Images/seo.png"></h2>'),
+            [
+                LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Toast SEO<img style="position:relative;top:8px;" src="' . Director::absoluteBaseURL() . 'toast-seo/images/seo.png"></h2>'),
                 LiteralField::create('', '<div class="toastSeo" style="margin-left:12px;">'),
                 LiteralField::create('', '<br><strong>Focus Keyword Usage</strong>'),
                 LiteralField::create('', '<br>Your focus keyword was found in:'),
@@ -59,15 +52,15 @@ class ToastSEO extends DataExtension {
                 LiteralField::create('', '<div class="toastSEOSummaryText" style="opacity:0;position:relative;height:0;overflow:hidden;">::  ' . $this->owner->dbObject('Content')->Summary(25) . '</div>'),
                 TextField::create('MetaAuthor', 'Author')->setRightTitle('Example: John Doe, j.doe@example.com'),
                 HeaderField::create('', '&nbsp;&nbsp;&nbsp;Robots'),
-                OptionsetField::create('robotsIndex', 'Index', array(
-                    'index' => 'INDEX',
+                OptionsetField::create('robotsIndex', 'Index', [
+                    'index'   => 'INDEX',
                     'noindex' => 'NOINDEX'
-                )),
-                OptionsetField::create('robotsFollow', 'Follow', array(
-                    'follow' => 'FOLLOW',
+                ]),
+                OptionsetField::create('robotsFollow', 'Follow', [
+                    'follow'   => 'FOLLOW',
                     'nofollow' => 'NOFOLLOW'
-                ))
-            )
+                ])
+            ]
         ));
     }
 
@@ -111,7 +104,7 @@ class ToastSEO extends DataExtension {
 
     public function getToastSEOTitle()
     {
-        return  $this->owner->SEOTitle ? : $this->owner->MetaTitle ? : $this->owner->Title;
+        return $this->owner->SEOTitle ?: $this->owner->MetaTitle ?: $this->owner->Title;
     }
 
     public function getFullToastSEOTitle()

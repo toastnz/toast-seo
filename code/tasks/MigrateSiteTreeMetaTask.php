@@ -69,7 +69,8 @@ class MigrateSEOTask extends BuildTask {
                             if (!empty($newData) && $overwrite === false) {
                                 continue;
                             }
-                            DB::query("UPDATE SiteTree SET {$fieldName} = '{$oldData[0]}' WHERE ID = {$id}");
+                            $data = Convert::raw2sql($oldData[0]);
+                            DB::query("UPDATE SiteTree SET {$fieldName} = '{$data}' WHERE ID = {$id}");
                         } else {
                             echo 'Field "' . $fieldName . '" empty.' . $this->eol;
                         }

@@ -1,7 +1,11 @@
 # Change Log
 
 
-## [1.0.0](https://github.com/toastnz/toast-seo/tree/1.0.0) (2016-12-09)
+## [1.0.1](https://github.com/toastnz/toast-seo/tree/1.0.1) (2017-07-06)
+
+* Remove Travis (overkill at this point)
+
+## [1.0.0](https://github.com/toastnz/toast-seo/tree/1.0.0) (2017-07-06)
 
 * Restructure - remove deprecated tasks and tests
 * Stop saving to database

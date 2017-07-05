@@ -1,5 +1,12 @@
 # Change Log
 
+
+## [1.0.0](https://github.com/toastnz/toast-seo/tree/1.0.0) (2016-12-09)
+
+* Restructure - remove deprecated tasks and tests
+* Stop saving to database
+* Fix case on database fields
+
 ## [0.3.2](https://github.com/toastnz/toast-seo/tree/0.3.2) (2016-12-09)
 
 * Relaxed SilverStripe Framework/CMS requirements

@@ -20,17 +20,17 @@ class ToastSEOSiteConfigExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        if (!$fields->fieldByName('Root.Settings')) {
-            $fields->addFieldToTab('Root', TabSet::create('Settings'));
+        if (!$fields->fieldByName('Root.Metadata')) {
+            $fields->addFieldToTab('Root', TabSet::create('Metadata'));
         }
 
         /** -----------------------------------------
          * Details
          * ----------------------------------------*/
 
-        $fields->findOrMakeTab('Root.Settings.SEO');
+        $fields->findOrMakeTab('Root.Metadata.SEO', 'SEO');
 
-        $fields->addFieldsToTab('Root.Settings.SEO', [
+        $fields->addFieldsToTab('Root.Metadata.SEO', [
             HeaderField::create('', 'SEO Settings'),
             TextField::create('DefaultSEOMetaTitle', 'Default Meta Title Addition')
                 ->setRightTitle('This is additional copy that will be automatically added to all of your pages\' meta titles.'),

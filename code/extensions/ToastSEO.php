@@ -6,8 +6,8 @@
  * @property string            SEOTitle
  * @property string            FocusKeyword
  * @property string            MetaAuthor
- * @property string            robotsIndex
- * @property string            robotsFollow
+ * @property string            RobotsIndex
+ * @property string            RobotsFollow
  *
  * @property SiteTree|ToastSEO owner
  */
@@ -17,8 +17,13 @@ class ToastSEO extends DataExtension
         'SEOTitle'     => 'Varchar(512)',
         'FocusKeyword' => 'Varchar(512)',
         'MetaAuthor'   => 'Varchar(512)',
-        'robotsIndex'  => 'Enum("index,noindex","index")',
-        'robotsFollow' => 'Enum("follow,nofollow","follow")'
+        'RobotsIndex'  => 'Enum("index,noindex","index")',
+        'RobotsFollow' => 'Enum("follow,nofollow","follow")'
+    ];
+
+    public static $defaults = [
+        'RobotsIndex'  => 'index',
+        'RobotsFollow' => 'follow'
     ];
 
     /**
@@ -30,53 +35,36 @@ class ToastSEO extends DataExtension
 
         $fields->removeByName('Metadata');
 
-        $fields->addFieldToTab('Root.Main', ToggleCompositeField::create('Toast SEO', 'Toast SEO',
-            [
-                LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Toast SEO<img style="position:relative;top:8px;" src="' . Director::absoluteBaseURL() . 'toast-seo/images/seo.png"></h2>'),
-                LiteralField::create('', '<div class="toastSeo" style="margin-left:12px;">'),
-                LiteralField::create('', '<br><strong>Focus Keyword Usage</strong>'),
-                LiteralField::create('', '<br>Your focus keyword was found in:'),
-                LiteralField::create('', '<br><ul>'),
-                LiteralField::create('', '<li>Page Title:<strong class="toastSEOTitle"></strong></li>'),
+        $fields->addFieldToTab('Root.Main', ToggleCompositeField::create('Toast SEO', 'Toast SEO', [
+            LiteralField::create('', '<h2>&nbsp;&nbsp;&nbsp;Toast SEO<img style="position:relative;top:8px;" src="' . Director::absoluteBaseURL() . 'toast-seo/images/seo.png"></h2>'),
+            LiteralField::create('', '<div class="toastSeo" style="margin-left:12px;">'),
+            LiteralField::create('', '<br><strong>Focus Keyword Usage</strong>'),
+            LiteralField::create('', '<br>Your focus keyword was found in:'),
+            LiteralField::create('', '<br><ul>'),
+            LiteralField::create('', '<li>Page Title:<strong class="toastSEOTitle"></strong></li>'),
 
-                LiteralField::create('', '<li>Page URL: <strong class="toastURLMatch"></strong></li>'),
-                LiteralField::create('', '<li>First Paragraph:<strong class="toastSEOSummary"></strong></li>'),
-                LiteralField::create('', '<li>Meta Description:<strong class="toastSEOMeta"></strong></li>'),
-                LiteralField::create('', '</ul>'),
-                LiteralField::create('', '<div class="toastSEOSnippet" style="padding:0 20px 10px;background:white;margin:20px  20px 20px 0;display:block;border: 1px solid grey;"></div>'),
-                LiteralField::create('', '</div>'),
-                TextField::create('FocusKeyword', 'Page Subject')->addExtraClass('focusWords')->setRightTitle('Pick the main keywords or keyphrase that this page is about.'),
-                TextField::create('SEOTitle', 'Meta Title')->setRightTitle('This meta title is generated automatically from the page name. Editing this will change how the page title shows up in google search. Each page title must be unique.'),
-                LiteralField::create('', '<br><p class="toastSEOMetaCount" style="margin-left: 12px;">The meta description should be limited to 156 characters, <span class="toastSeoChars">6</span> chars left.</p>'),
-                TextareaField::create('MetaDescription', 'Meta Description')->addExtraClass('toastSEOMetaText')->setRightTitle('The meta description is often shown as the black text under the title in a search result. For this to work it has to contain the keyword that was searched for.'),
-                LiteralField::create('', '<div class="toastSEOSummaryText" style="opacity:0;position:relative;height:0;overflow:hidden;">::  ' . $this->owner->dbObject('Content')->Summary(25) . '</div>'),
-                TextField::create('MetaAuthor', 'Author')->setRightTitle('Example: John Doe, j.doe@example.com'),
-                HeaderField::create('', '&nbsp;&nbsp;&nbsp;Robots'),
-                OptionsetField::create('robotsIndex', 'Index', [
-                    'index'   => 'INDEX',
-                    'noindex' => 'NOINDEX'
-                ]),
-                OptionsetField::create('robotsFollow', 'Follow', [
-                    'follow'   => 'FOLLOW',
-                    'nofollow' => 'NOFOLLOW'
-                ])
-            ]
-        ));
-    }
-
-    public function onBeforeWrite()
-    {
-        parent::onBeforeWrite();
-
-        if ($this->owner->exists()) {
-            if ($this->owner->isChanged('Content') && !$this->owner->MetaDescription) {
-                $this->owner->setField('MetaDescription', $this->owner->dbObject('Content')->Summary(25));
-            }
-
-            if ($this->owner->isChanged('Title') && !$this->owner->SEOTitle) {
-                $this->owner->setField('SEOTitle', $this->owner->Title);
-            }
-        }
+            LiteralField::create('', '<li>Page URL: <strong class="toastURLMatch"></strong></li>'),
+            LiteralField::create('', '<li>First Paragraph:<strong class="toastSEOSummary"></strong></li>'),
+            LiteralField::create('', '<li>Meta Description:<strong class="toastSEOMeta"></strong></li>'),
+            LiteralField::create('', '</ul>'),
+            LiteralField::create('', '<div class="toastSEOSnippet" style="padding:0 20px 10px;background:white;margin:20px  20px 20px 0;display:block;border: 1px solid grey;"></div>'),
+            LiteralField::create('', '</div>'),
+            TextField::create('FocusKeyword', 'Page Subject')->addExtraClass('focusWords')->setRightTitle('Pick the main keywords or keyphrase that this page is about.'),
+            TextField::create('SEOTitle', 'Meta Title')->setRightTitle('This meta title is generated automatically from the page name. Editing this will change how the page title shows up in google search. Each page title must be unique.'),
+            LiteralField::create('', '<br><p class="toastSEOMetaCount" style="margin-left: 12px;">The meta description should be limited to 156 characters, <span class="toastSeoChars">6</span> chars left.</p>'),
+            TextareaField::create('MetaDescription', 'Meta Description')->addExtraClass('toastSEOMetaText')->setRightTitle('The meta description is often shown as the black text under the title in a search result. For this to work it has to contain the keyword that was searched for.'),
+            LiteralField::create('', '<div class="toastSEOSummaryText" style="opacity:0;position:relative;height:0;overflow:hidden;">::  ' . $this->owner->dbObject('Content')->Summary(25) . '</div>'),
+            TextField::create('MetaAuthor', 'Author')->setRightTitle('Example: John Doe, j.doe@example.com'),
+            HeaderField::create('', '&nbsp;&nbsp;&nbsp;Robots'),
+            OptionsetField::create('RobotsIndex', 'Index', [
+                'index'   => 'INDEX',
+                'noindex' => 'NOINDEX'
+            ]),
+            OptionsetField::create('RobotsFollow', 'Follow', [
+                'follow'   => 'FOLLOW',
+                'nofollow' => 'NOFOLLOW'
+            ])
+        ]));
     }
 
     /**
@@ -85,8 +73,8 @@ class ToastSEO extends DataExtension
     public function MetaTags(&$tags)
     {
         // Indexing
-        if ($this->owner->robotsIndex && $this->owner->robotsFollow) {
-            $tags .= sprintf('<meta name="robots" content="%s, %s">', $this->owner->robotsIndex, $this->owner->robotsFollow) . "\n";
+        if ($this->owner->RobotsIndex && $this->owner->RobotsFollow) {
+            $tags .= sprintf('<meta name="robots" content="%s, %s">', $this->owner->RobotsIndex, $this->owner->RobotsFollow) . "\n";
         } else {
             $tags .= '<meta name="robots" content="index, follow">' . "\n";
         }

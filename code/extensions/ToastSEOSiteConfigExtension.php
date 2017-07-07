@@ -1,5 +1,12 @@
 <?php
 
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TabSet;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Class ToastSEOSiteConfigExtension
  *

@@ -1,10 +1,11 @@
 ---
 Name: toastseo
-After: 'framework/*','cms/*'
+After:
+  - 'siteconfig/*'
 ---
-SiteTree:
+SilverStripe\CMS\Model\SiteTree:
   extensions:
     - ToastSEO
-SiteConfig:
+SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - ToastSEOSiteConfigExtension

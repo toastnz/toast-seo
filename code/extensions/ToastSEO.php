@@ -1,5 +1,17 @@
 <?php
 
+use SilverStripe\Forms\FieldList;
+use SilverStripe\View\Requirements;
+use SilverStripe\Control\Director;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\Forms\ToggleCompositeField;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\ORM\DataExtension;
+
 /**
  * Class ToastSEO
  *

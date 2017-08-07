@@ -92,6 +92,10 @@ class ToastSEO extends DataExtension
 
     public function getToastSEOTitle()
     {
+        // Workaround for "New xxxx Page" issue
+        if ($this->owner->SEOTitle == 'New ' . $this->owner->ClassName) {
+            return $this->owner->MetaTitle ?: $this->owner->Title;
+        }
         return $this->owner->SEOTitle ?: $this->owner->MetaTitle ?: $this->owner->Title;
     }
 

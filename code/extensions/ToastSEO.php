@@ -6,8 +6,8 @@
  * @property string            SEOTitle
  * @property string            FocusKeyword
  * @property string            MetaAuthor
- * @property string            RobotsIndex
- * @property string            RobotsFollow
+ * @property string            robotsIndex
+ * @property string            robotsFollow
  *
  * @property SiteTree|ToastSEO owner
  */
@@ -17,13 +17,13 @@ class ToastSEO extends DataExtension
         'SEOTitle'     => 'Varchar(512)',
         'FocusKeyword' => 'Varchar(512)',
         'MetaAuthor'   => 'Varchar(512)',
-        'RobotsIndex'  => 'Enum("index,noindex","index")',
-        'RobotsFollow' => 'Enum("follow,nofollow","follow")'
+        'robotsIndex'  => 'Enum("index,noindex","index")',
+        'robotsFollow' => 'Enum("follow,nofollow","follow")'
     ];
 
     public static $defaults = [
-        'RobotsIndex'  => 'index',
-        'RobotsFollow' => 'follow'
+        'robotsIndex'  => 'index',
+        'robotsFollow' => 'follow'
     ];
 
     /**
@@ -56,11 +56,11 @@ class ToastSEO extends DataExtension
             LiteralField::create('', '<div class="toastSEOSummaryText" style="opacity:0;position:relative;height:0;overflow:hidden;">::  ' . $this->owner->dbObject('Content')->Summary(25) . '</div>'),
             TextField::create('MetaAuthor', 'Author')->setRightTitle('Example: John Doe, j.doe@example.com'),
             HeaderField::create('', '&nbsp;&nbsp;&nbsp;Robots'),
-            OptionsetField::create('RobotsIndex', 'Index', [
+            OptionsetField::create('robotsIndex', 'Index', [
                 'index'   => 'INDEX',
                 'noindex' => 'NOINDEX'
             ]),
-            OptionsetField::create('RobotsFollow', 'Follow', [
+            OptionsetField::create('robotsFollow', 'Follow', [
                 'follow'   => 'FOLLOW',
                 'nofollow' => 'NOFOLLOW'
             ])
@@ -73,8 +73,8 @@ class ToastSEO extends DataExtension
     public function MetaTags(&$tags)
     {
         // Indexing
-        if ($this->owner->RobotsIndex && $this->owner->RobotsFollow) {
-            $tags .= sprintf('<meta name="robots" content="%s, %s">', $this->owner->RobotsIndex, $this->owner->RobotsFollow) . "\n";
+        if ($this->owner->robotsIndex && $this->owner->robotsFollow) {
+            $tags .= sprintf('<meta name="robots" content="%s, %s">', $this->owner->robotsIndex, $this->owner->robotsFollow) . "\n";
         } else {
             $tags .= '<meta name="robots" content="index, follow">' . "\n";
         }

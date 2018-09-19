@@ -45,19 +45,18 @@
         });
     });
 
-
     /**
      * Test the length of the meta description
      * and warn if going over the recommended limit
      */
     function MetaLength() {
-        var $count = $('.toastSeoChars');
-        var length = 156;
+        var $count        = $('.toastSeoChars');
+        var length        = 156;
         var currentLength = $('[name=MetaDescription]').val().length;
         if (currentLength <= length) {
-            $count.text(length - currentLength).css({fontWeight: 'bold', color: 'green'});
+            $count.text(length - currentLength).css({ fontWeight: 'bold', color: 'green' });
         } else {
-            $count.text(length - currentLength).css({fontWeight: 'bold', color: 'red'});
+            $count.text(length - currentLength).css({ fontWeight: 'bold', color: 'red' });
         }
 
     }
@@ -72,7 +71,7 @@
             var words = a.split(' ');
             for (var x = 0; x < words.length; x++) {
                 if (words[x].length > 0) {
-                    if (words[x] == b.toLowerCase().trim()) {
+                    if (words[x].toLowerCase() == b.toLowerCase().trim()) {
                         return true
                     }
                 }
@@ -84,7 +83,7 @@
          * Test to see if any of our keywords
          * appear in the page URL
          */
-        var pageURL = $('.preview').text().replace(window.location.origin, '');
+        var pageURL  = $('.preview').text().replace(window.location.origin, '');
         var cleanURL = pageURL.substr(pageURL.lastIndexOf('/') + 1);
         var URLArray = cleanURL.toLowerCase().split('-');
         var URLCount = 0;
@@ -96,16 +95,16 @@
         }
 
         if (URLCount > 0) {
-            $('.toastURLMatch').text(' Yes (' + URLCount + ')').css({color: 'green'});
+            $('.toastURLMatch').text(' Yes (' + URLCount + ')').css({ color: 'green' });
         } else {
-            $('.toastURLMatch').text(' No (' + URLCount + ')').css({color: 'red'});
+            $('.toastURLMatch').text(' No (' + URLCount + ')').css({ color: 'red' });
         }
 
         /**
          * Test to see if any of our keywords
          * appear in the pages' first paragraph
          */
-        var summary = $('.toastSEOSummaryText').text();
+        var summary      = $('.toastSEOSummaryText').text();
         var summaryArray = summary.toLowerCase().split(' ');
         var summaryCount = 0;
 
@@ -116,16 +115,16 @@
         }
 
         if (summaryCount > 0) {
-            $('.toastSEOSummary').text(' Yes (' + summaryCount + ')').css({color: 'green'});
+            $('.toastSEOSummary').text(' Yes (' + summaryCount + ')').css({ color: 'green' });
         } else {
-            $('.toastSEOSummary').text(' No (' + summaryCount + ')').css({color: 'red'});
+            $('.toastSEOSummary').text(' No (' + summaryCount + ')').css({ color: 'red' });
         }
 
         /**
          * Test to see if any of our keywords
          * appear in the pages' meta description
          */
-        var meta = $('[name=MetaDescription]').val();
+        var meta      = $('[name=MetaDescription]').val();
         var metaArray = meta.toLowerCase().split(' ');
         var metaCount = 0;
 
@@ -136,16 +135,16 @@
         }
 
         if (metaCount > 0) {
-            $('.toastSEOMeta').text(' Yes (' + metaCount + ')').css({color: 'green'});
+            $('.toastSEOMeta').text(' Yes (' + metaCount + ')').css({ color: 'green' });
         } else {
-            $('.toastSEOMeta').text(' No (' + metaCount + ')').css({color: 'red'});
+            $('.toastSEOMeta').text(' No (' + metaCount + ')').css({ color: 'red' });
         }
 
         /**
          * Test to see if any of our keywords
          * appear in the pages' title
          */
-        var title = $('[name=Title]').val();
+        var title      = $('[name=Title]').val();
         var titleArray = title.toLowerCase().split(' ');
         var titleCount = 0;
 
@@ -156,11 +155,10 @@
         }
 
         if (titleCount > 0) {
-            $('.toastSEOTitle').text('Yes (' + titleCount + ')').css({color: 'green'});
+            $('.toastSEOTitle').text('Yes (' + titleCount + ')').css({ color: 'green' });
         } else {
-            $('.toastSEOTitle').text('No (' + titleCount + ')').css({color: 'red'});
+            $('.toastSEOTitle').text('No (' + titleCount + ')').css({ color: 'red' });
         }
-
 
         var tmpl = '';
 
@@ -171,7 +169,6 @@
         $('.toastSEOSnippet').html(tmpl);
 
     }
-
 
 })(jQuery);
 

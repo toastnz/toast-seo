@@ -79,6 +79,7 @@
         }
 
         var keywords = $('[name=FocusKeyword]').val();
+
         /**
          * Test to see if any of our keywords
          * appear in the page URL
@@ -104,7 +105,7 @@
          * Test to see if any of our keywords
          * appear in the pages' first paragraph
          */
-        var summary      = $('.toastSEOSummaryText').text();
+        var summary      = $('.toastSEOSummaryText').text().replace(/[^a-zA-Z ]/g, "");
         var summaryArray = summary.toLowerCase().split(' ');
         var summaryCount = 0;
 
@@ -124,7 +125,7 @@
          * Test to see if any of our keywords
          * appear in the pages' meta description
          */
-        var meta      = $('[name=MetaDescription]').val();
+        var meta      = $('[name=MetaDescription]').val().replace(/[^a-zA-Z ]/g, "");
         var metaArray = meta.toLowerCase().split(' ');
         var metaCount = 0;
 
@@ -144,7 +145,7 @@
          * Test to see if any of our keywords
          * appear in the pages' title
          */
-        var title      = $('[name=Title]').val();
+        var title      = $('[name=Title]').val().replace(/[^a-zA-Z ]/g, "");
         var titleArray = title.toLowerCase().split(' ');
         var titleCount = 0;
 

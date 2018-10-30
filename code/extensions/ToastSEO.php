@@ -67,7 +67,7 @@ class ToastSEO extends DataExtension
             TextareaField::create('MetaDescription', 'Meta Description')->addExtraClass('toastSEOMetaText')->setRightTitle('The meta description is often shown as the black text under the title in a search result. For this to work it has to contain the keyword that was searched for.'),
             LiteralField::create('', '<div class="toastSEOSummaryText" style="opacity:0;position:relative;height:0;overflow:hidden;">::  ' . $this->owner->dbObject('Content')->Summary(25) . '</div>'),
             TextField::create('MetaAuthor', 'Author')->setRightTitle('Example: John Doe, j.doe@example.com'),
-            HeaderField::create('', '&nbsp;&nbsp;&nbsp;Robots'),
+            LiteralField::create('', '<h2 style="padding-left: 10px;">Robots</h2>'),
             OptionsetField::create('RobotsIndex', 'Index', [
                 'index'   => 'INDEX',
                 'noindex' => 'NOINDEX'

@@ -1,16 +1,18 @@
 <?php
 
+use SilverStripe\Assets\Image;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\View\Requirements;
-use SilverStripe\Control\Director;
-use SilverStripe\Forms\LiteralField;
 use SilverStripe\Forms\TextField;
-use SilverStripe\Forms\TextareaField;
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\HeaderField;
-use SilverStripe\Forms\OptionsetField;
-use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\OptionsetField;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\Forms\ToggleCompositeField;
+use SilverStripe\AssetAdmin\Forms\UploadField;
 
 /**
  * Class ToastSEO
@@ -31,6 +33,14 @@ class ToastSEO extends DataExtension
         'MetaAuthor'   => 'Varchar(512)',
         'RobotsIndex'  => 'Enum("index,noindex","index")',
         'RobotsFollow' => 'Enum("follow,nofollow","follow")'
+    ];
+
+    private static $has_one = [
+        'MetaImage' => Image::class
+    ];
+
+    private static $owns = [
+        'MetaImage'
     ];
 
     public static $defaults = [
@@ -54,19 +64,28 @@ class ToastSEO extends DataExtension
             LiteralField::create('', '<br>Your focus keyword was found in:'),
             LiteralField::create('', '<br><ul>'),
             LiteralField::create('', '<li>Page Title:<strong class="toastSEOTitle"></strong></li>'),
-
             LiteralField::create('', '<li>Page URL: <strong class="toastURLMatch"></strong></li>'),
             LiteralField::create('', '<li>First Paragraph:<strong class="toastSEOSummary"></strong></li>'),
             LiteralField::create('', '<li>Meta Description:<strong class="toastSEOMeta"></strong></li>'),
             LiteralField::create('', '</ul>'),
             LiteralField::create('', '<div class="toastSEOSnippet" style="padding:0 20px 10px;background:white;margin:20px  20px 20px 0;display:block;border: 1px solid grey;"></div>'),
             LiteralField::create('', '</div>'),
-            TextField::create('FocusKeyword', 'Page Subject')->addExtraClass('focusWords')->setRightTitle('Pick the main keywords or keyphrase that this page is about.'),
-            TextField::create('SEOTitle', 'Meta Title')->setRightTitle('This meta title is generated automatically from the page name. Editing this will change how the page title shows up in google search. Each page title must be unique.'),
+            TextField::create('FocusKeyword', 'Page Subject')
+                ->addExtraClass('focusWords')
+                ->setRightTitle('Pick the main keywords or keyphrase that this page is about.'),
+            TextField::create('SEOTitle', 'Meta Title')
+                ->setRightTitle('This meta title is generated automatically from the page name. Editing this will change how the page title shows up in google search. Each page title must be unique.'),
             LiteralField::create('', '<br><p class="toastSEOMetaCount" style="margin-left: 12px;">The meta description should be limited to 156 characters, <span class="toastSeoChars">6</span> chars left.</p>'),
-            TextareaField::create('MetaDescription', 'Meta Description')->addExtraClass('toastSEOMetaText')->setRightTitle('The meta description is often shown as the black text under the title in a search result. For this to work it has to contain the keyword that was searched for.'),
+            TextareaField::create('MetaDescription', 'Meta Description')
+                ->addExtraClass('toastSEOMetaText')
+                ->setRightTitle('The meta description is often shown as the black text under the title in a search result. For this to work it has to contain the keyword that was searched for.'),
             LiteralField::create('', '<div class="toastSEOSummaryText" style="opacity:0;position:relative;height:0;overflow:hidden;">::  ' . $this->owner->dbObject('Content')->Summary(25) . '</div>'),
-            TextField::create('MetaAuthor', 'Author')->setRightTitle('Example: John Doe, j.doe@example.com'),
+            TextField::create('MetaAuthor', 'Author')
+                ->setRightTitle('Example: John Doe, j.doe@example.com'),
+            UploadField::create('MetaImage', 'Meta Image')
+                ->setRightTitle('Used for Facebook Opengraph and Twitter Card')
+                ->setAllowedExtensions(['png', 'jpg', 'jpeg'])
+                ->setFolderName('Uploads/SEO'),                
             LiteralField::create('', '<h2 style="padding-left: 10px;">Robots</h2>'),
             OptionsetField::create('RobotsIndex', 'Index', [
                 'index'   => 'INDEX',
@@ -84,22 +103,71 @@ class ToastSEO extends DataExtension
      */
     public function MetaTags(&$tags)
     {
-        // Indexing
+        $siteConfig = SiteConfig::current_site_config();
+
+        $tagCollection = [];
+
         if ($this->owner->RobotsIndex && $this->owner->RobotsFollow) {
-            $tags .= sprintf('<meta name="robots" content="%s, %s">', $this->owner->RobotsIndex, $this->owner->RobotsFollow) . "\n";
+            $tagCollection['main'][] = sprintf('<meta name="robots" content="%s, %s" />', $this->owner->RobotsIndex, $this->owner->RobotsFollow);
         } else {
-            $tags .= '<meta name="robots" content="index, follow">' . "\n";
+            $tagCollection['main'][] = '<meta name="robots" content="index, follow" />';
         }
-
-        // Keywords
         if ($this->owner->FocusKeyword) {
-            $tags .= sprintf('<meta name="keywords" content="%s">', $this->owner->FocusKeyword) . "\n";
+            $tagCollection['main'][] = sprintf('<meta name="keywords" content="%s" />', $this->owner->FocusKeyword);           
+        }
+        if ($this->owner->MetaAuthor) {
+            $tagCollection['main'][] = '<meta name="Author" content="' . $this->owner->MetaAuthor . '" />';
         }
 
-        // Author
-        if ($this->owner->MetaAuthor) {
-            $tags .= '<meta name="Author" content="' . $this->owner->MetaAuthor . '">' . "\n";
+        $metaImage = $this->owner->customMetaImage() && $this->owner->customMetaImage()->exists() ? $this->owner->customMetaImage() : ($this->owner->MetaImage()->exists() ? $this->owner->MetaImage() : false);
+
+        $tagCollection['itemprop'][] = '<meta itemprop="name" content="' . trim($this->owner->getFullToastSEOTitle()) . '" />';
+        if ($metaImage) {
+            $tagCollection['itemprop'][] = '<meta itemprop="image" content="' . $metaImage->AbsoluteLink() . '" />';
         }
+        $tagCollection['itemprop'][] = '<meta itemprop="description" content="' . $this->owner->MetaDescription . '" />';
+
+        if ($siteConfig->IncludeTwitterCardSEO) {
+            if ($siteConfig->TwitterIDSEO) {
+                $tagCollection['twitter'][] = '<meta name="twitter:site" content="' . $siteConfig->TwitterIDSEO . '" />';
+                $tagCollection['twitter'][] = '<meta name="twitter:creator" content="' . $siteConfig->TwitterIDSEO . '" />';
+            }
+            $tagCollection['twitter'][] = '<meta name="twitter:card" content="summary_large_image">';
+            $tagCollection['twitter'][] = '<meta name="twitter:description" content="' . $this->owner->MetaDescription . '" />';
+            if ($metaImage) {
+                $tagCollection['twitter'][] = '<meta name="twitter:image:src" content="' . $metaImage->AbsoluteLink() . '" />';
+            }
+        }
+
+        if ($siteConfig->IncludeOGSEO) {
+            if ($siteConfig->FacebookIDSEO) {
+                $tagCollection['facebook'][] = '<meta name="fb:app_id" content="' . $siteConfig->FacebookIDSEO . '" />';
+            }
+            $tagCollection['facebook'][] = '<meta name="og:type" content="article" />';
+            $tagCollection['facebook'][] = '<meta name="og:title" content="' . trim($this->owner->getFullToastSEOTitle()) . '" />';
+            $tagCollection['facebook'][] = '<meta name="og:url" content="' . $this->owner->AbsoluteLink() . '" />';
+            $tagCollection['facebook'][] = '<meta name="og:description" content="' . $this->owner->MetaDescription . '" />';
+            $tagCollection['facebook'][] = '<meta name="og:site_name" content="' . $siteConfig->Title . '" />';
+
+
+            if ($metaImage) {
+                $tagCollection['facebook'][] = '<meta name="og:image" content="' . $metaImage->AbsoluteLink() . '" />';
+            }
+        }
+
+        $this->owner->extend('updateMetaTagCollection', $tagCollection);
+
+        foreach($tagCollection as $section => $tagData) {
+            foreach($tagData as $tag) {
+                $tags .= $tag . "\n";
+            }
+        }
+    
+    }
+
+    public function customMetaImage()
+    {
+        return false;
     }
 
     public function getToastSEOTitle()

@@ -1,11 +1,12 @@
 <?php
 
-use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TabSet;
-use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use SilverStripe\Forms\OptionsetField;
+use SilverStripe\Forms\HeaderField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\OptionsetField;
 
 /**
  * Class ToastSEOSiteConfigExtension
@@ -19,7 +20,11 @@ class ToastSEOSiteConfigExtension extends DataExtension
 {
     private static $db = [
         'DefaultSEOMetaTitle'         => 'Varchar(255)',
-        'DefaultSEOMetaTitlePosition' => 'Enum("before,after","before")'
+        'DefaultSEOMetaTitlePosition' => 'Enum("before,after","before")',
+        'IncludeTwitterCardSEO'       => 'Boolean',
+        'IncludeOGSEO'                => 'Boolean',
+        'TwitterIDSEO'                => 'Varchar(50)',
+        'FacebookIDSEO'               => 'Varchar(50)'
     ];
 
     /**
@@ -44,7 +49,11 @@ class ToastSEOSiteConfigExtension extends DataExtension
             OptionsetField::create('DefaultSEOMetaTitlePosition', 'Default Meta Title Position', [
                 'before' => 'Prepend to the Meta Title',
                 'after'  => 'Append to the Meta Title'
-            ])
+            ]),
+            CheckboxField::create('IncludeTwitterCardSEO', 'Include Twitter Card SEO in Meta Tags'),
+            TextField::create('TwitterIDSEO', 'Twitter ID (to include in Twitter Card SEO Meta Tag)'),
+            CheckboxField::create('IncludeOGSEO', 'Include OpenGraph in Meta Tags'),
+            TextField::create('FacebookIDSEO', 'Facebook ID (to include in OpenGraph SEO Meta Tag)')
         ]);
 
     }

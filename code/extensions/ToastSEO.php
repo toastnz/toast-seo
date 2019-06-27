@@ -129,29 +129,29 @@ class ToastSEO extends DataExtension
 
         if ($siteConfig->IncludeTwitterCardSEO) {
             if ($siteConfig->TwitterIDSEO) {
-                $tagCollection['twitter'][] = '<meta name="twitter:site" content="' . $siteConfig->TwitterIDSEO . '" />';
-                $tagCollection['twitter'][] = '<meta name="twitter:creator" content="' . $siteConfig->TwitterIDSEO . '" />';
+                $tagCollection['twitter'][] = '<meta property="twitter:site" content="' . $siteConfig->TwitterIDSEO . '" />';
+                $tagCollection['twitter'][] = '<meta property="twitter:creator" content="' . $siteConfig->TwitterIDSEO . '" />';
             }
-            $tagCollection['twitter'][] = '<meta name="twitter:card" content="summary_large_image">';
-            $tagCollection['twitter'][] = '<meta name="twitter:description" content="' . $this->owner->MetaDescription . '" />';
+            $tagCollection['twitter'][] = '<meta property="twitter:card" content="summary_large_image">';
+            $tagCollection['twitter'][] = '<meta property="twitter:description" content="' . $this->owner->MetaDescription . '" />';
             if ($metaImage) {
-                $tagCollection['twitter'][] = '<meta name="twitter:image:src" content="' . $metaImage->AbsoluteLink() . '" />';
+                $tagCollection['twitter'][] = '<meta property="twitter:image:src" content="' . $metaImage->AbsoluteLink() . '" />';
             }
         }
 
         if ($siteConfig->IncludeOGSEO) {
             if ($siteConfig->FacebookIDSEO) {
-                $tagCollection['facebook'][] = '<meta name="fb:app_id" content="' . $siteConfig->FacebookIDSEO . '" />';
+                $tagCollection['facebook'][] = '<meta property="fb:app_id" content="' . $siteConfig->FacebookIDSEO . '" />';
             }
-            $tagCollection['facebook'][] = '<meta name="og:type" content="article" />';
-            $tagCollection['facebook'][] = '<meta name="og:title" content="' . trim($this->owner->getFullToastSEOTitle()) . '" />';
-            $tagCollection['facebook'][] = '<meta name="og:url" content="' . $this->owner->AbsoluteLink() . '" />';
-            $tagCollection['facebook'][] = '<meta name="og:description" content="' . $this->owner->MetaDescription . '" />';
-            $tagCollection['facebook'][] = '<meta name="og:site_name" content="' . $siteConfig->Title . '" />';
+            $tagCollection['facebook'][] = '<meta property="og:type" content="article" />';
+            $tagCollection['facebook'][] = '<meta property="og:title" content="' . trim($this->owner->getFullToastSEOTitle()) . '" />';
+            $tagCollection['facebook'][] = '<meta property="og:url" content="' . $this->owner->AbsoluteLink() . '" />';
+            $tagCollection['facebook'][] = '<meta property="og:description" content="' . $this->owner->MetaDescription . '" />';
+            $tagCollection['facebook'][] = '<meta property="og:site_name" content="' . $siteConfig->Title . '" />';
 
 
             if ($metaImage) {
-                $tagCollection['facebook'][] = '<meta name="og:image" content="' . $metaImage->AbsoluteLink() . '" />';
+                $tagCollection['facebook'][] = '<meta property="og:image" content="' . $metaImage->AbsoluteLink() . '" />';
             }
         }
 

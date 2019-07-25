@@ -1,31 +1,31 @@
 {
-    "name": "toastnz/toast-seo",
-    "description": "Silverstripe SEO Module",
-    "type": "silverstripe-module",
-    "keywords": [
-        "silverstripe",
-        "SEO"
-    ],
-    "license": "BSD-3-Clause",
-    "authors": [
-        {
-            "name": "Jaydn de Graaf",
-            "homepage": "http://pinc.nz/",
-            "role": "Developer"
-        },
-        {
-            "name": "Danae Miller-Clendon",
-            "homepage": "http://toast.co.nz/",
-            "email": "danae@toast.co.nz",
-            "role": "Token Chick"
-        }
-    ],
-    "require": {
-        "composer/installers": "*",
-        "silverstripe/cms": "~4.0",
-        "silverstripe/framework": "~4.0"
+  "name": "toastnz/toast-seo",
+  "description": "Silverstripe SEO Module",
+  "type": "silverstripe-module",
+  "keywords": [
+    "silverstripe",
+    "SEO"
+  ],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Jaydn de Graaf",
+      "homepage": "http://pinc.nz/",
+      "role": "Developer"
     },
-    "require-dev": {
-        "phpunit/PHPUnit": "~4.8"
+    {
+      "name": "Danae Miller-Clendon",
+      "homepage": "http://toast.co.nz/",
+      "email": "danae@toast.co.nz",
+      "role": "Token Chick"
     }
+  ],
+  "require": {
+    "composer/installers": "*",
+    "silverstripe/cms": "~4.0",
+    "silverstripe/framework": "~4.0"
+  },
+  "require-dev": {
+    "phpunit/PHPUnit": "~4.8"
+  }
 }

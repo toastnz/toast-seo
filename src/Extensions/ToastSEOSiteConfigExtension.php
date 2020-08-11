@@ -1,5 +1,7 @@
 <?php
 
+namespace ToastNZ\SEO\Extensions;
+
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TabSet;
 use SilverStripe\Forms\HeaderField;
@@ -37,16 +39,23 @@ class ToastSEOSiteConfigExtension extends DataExtension
 
         $fields->findOrMakeTab('Root.Metadata.SEO', 'SEO');
 
-        $fields->addFieldsToTab('Root.Metadata.SEO', [
-            HeaderField::create('', 'SEO Settings'),
-            TextField::create('DefaultSEOMetaTitle', 'Default Meta Title Addition')
-                ->setRightTitle('This is additional copy that will be automatically added to all of your pages\' meta titles.'),
-            OptionsetField::create('DefaultSEOMetaTitlePosition', 'Default Meta Title Position', [
-                'before' => 'Prepend to the Meta Title',
-                'after'  => 'Append to the Meta Title'
-            ])
-        ]);
-
+        $fields->addFieldsToTab(
+            'Root.Metadata.SEO',
+            [
+                HeaderField::create('', 'SEO Settings'),
+                TextField::create('DefaultSEOMetaTitle', 'Default Meta Title Addition')
+                    ->setRightTitle(
+                        'This is additional copy that will be automatically added to all of your pages\' meta titles.'
+                    ),
+                OptionsetField::create(
+                    'DefaultSEOMetaTitlePosition',
+                    'Default Meta Title Position',
+                    [
+                        'before' => 'Prepend to the Meta Title',
+                        'after'  => 'Append to the Meta Title'
+                    ]
+                )
+            ]
+        );
     }
-
 }

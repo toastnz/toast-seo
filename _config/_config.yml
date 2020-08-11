@@ -5,7 +5,8 @@ After:
 ---
 SilverStripe\CMS\Model\SiteTree:
   extensions:
-    - ToastSEO
+    - ToastNZ\SEO\Extensions\ToastSEO
+
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
-    - ToastSEOSiteConfigExtension
+    - ToastNZ\SEO\Extensions\ToastSEOSiteConfigExtension

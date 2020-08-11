@@ -58,7 +58,7 @@ class ToastSEO extends DataExtension
         $metaDescriptionMessage .= 'in a search result. For this to work it has to contain the keyword that ';
         $metaDescriptionMessage .= 'was searched for.';
 
-        $topHTML = <<<HTML
+        $topHtml = <<<HTML
 <h2 class="toastSeoHeading">&nbsp;&nbsp;&nbsp;Toast SEO <img src="{$imageUrl}" alt="seo"></h2>
 <div class="toastSeo">
     <br><strong>Focus Keyword Usage</strong>
